@@ -16,5 +16,6 @@ libraryDependencies ++= Seq(
   "com.typesafe.slick" %% "slick-codegen" % "3.1.1",
 
   "mysql" % "mysql-connector-java" % "5.1.37",
-  "com.zaxxer" % "HikariCP" % "2.4.3"
+  "com.zaxxer" % "HikariCP" % "2.4.3",
+  "com.twitter" %% "twitter-server" % "1.20.0"
 )
