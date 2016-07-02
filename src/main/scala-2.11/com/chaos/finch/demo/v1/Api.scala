@@ -5,7 +5,6 @@ import com.chaos.finch.demo.v1.handler.ErrorHandler
 import com.twitter.finagle.Service
 import com.twitter.finagle.http.filter.ExceptionFilter
 import com.twitter.finagle.http.{Request, Response}
-
 import io.finch._
 import io.finch.circe._
 import io.circe.generic.auto._
