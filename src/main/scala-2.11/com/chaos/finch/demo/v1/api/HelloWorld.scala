@@ -1,6 +1,6 @@
-package com.chaos.finch.demo.v1.apis
+package com.chaos.finch.demo.v1.api
 
-import com.chaos.finch.demo.v1.models.Message
+import com.chaos.finch.demo.v1.model.Message
 import io.finch._
 import io.finch.circe._
 import io.circe.generic.auto._

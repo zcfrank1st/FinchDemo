@@ -1,4 +1,4 @@
-package com.chaos.finch.demo.v1.models
+package com.chaos.finch.demo.v1.model
 
 /**
   * Created by zcfrank1st on 7/2/16.

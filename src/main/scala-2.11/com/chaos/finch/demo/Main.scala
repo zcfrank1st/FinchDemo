@@ -10,12 +10,10 @@ import com.typesafe.scalalogging.StrictLogging
   * Created by zcfrank1st on 7/1/16.
   */
 object Main extends App with StrictLogging {
-
   logger.info("server start !!!")
-
   Await.ready(
     Http
       .server
-      .serve(":8081", Api.apiService)
+      .serve(":8080", Api.apiService)
   )
 }
