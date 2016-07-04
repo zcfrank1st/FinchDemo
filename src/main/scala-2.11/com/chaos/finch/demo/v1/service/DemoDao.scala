@@ -1,6 +1,6 @@
 package com.chaos.finch.demo.v1.service
 
-import com.chaos.finch.demo.util.DatabaseAccess
+import com.chaos.finch.demo.util.{ConfigModule, DatabaseAccessModule}
 import com.chaos.finch.demo.v1.model.gen.Tables.EtlTaskCfg
 import slick.lifted.TableQuery
 import slick.dbio.DBIO
@@ -13,7 +13,7 @@ import scala.concurrent.duration.Duration
   * Created by zcfrank1st on 7/2/16.
   */
 
-object DemoDao extends App with DatabaseAccess {
+object DemoDao extends App with DatabaseAccessModule with ConfigModule {
   val etl: TableQuery[EtlTaskCfg] = TableQuery[EtlTaskCfg]
 
   val sql = etl.filter(p => p.taskId > 0).result

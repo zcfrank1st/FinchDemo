@@ -7,10 +7,11 @@ import slick.jdbc.JdbcBackend.Database
 /**
   * Created by zcfrank1st on 7/2/16.
   */
-trait DatabaseAccess {
+trait DatabaseAccessModule {
+  self: ConfigModule =>
   val databasePool = {
-    val conf = ConfigLoader.config
-    val env = ConfigLoader.env
+    val conf = self.config
+    val env = self.env
 
     val datasourceConfig = new HikariConfig()
     datasourceConfig.setPoolName("hikari-pool")
