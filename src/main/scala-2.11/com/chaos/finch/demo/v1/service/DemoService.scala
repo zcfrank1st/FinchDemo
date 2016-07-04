@@ -1,6 +1,7 @@
 package com.chaos.finch.demo.v1.service
 
 import com.chaos.finch.demo.util.{ConfigModule, DatabaseAccessModule}
+import com.chaos.finch.demo.v1.model.Message
 import com.chaos.finch.demo.v1.model.gen.Tables.EtlTaskCfg
 import slick.lifted.TableQuery
 import slick.dbio.DBIO
@@ -13,21 +14,27 @@ import scala.concurrent.duration.Duration
   * Created by zcfrank1st on 7/2/16.
   */
 
-class DemoService extends DatabaseAccessModule with ConfigModule {
-  val etl: TableQuery[EtlTaskCfg] = TableQuery[EtlTaskCfg]
+trait DemoService {
+self: DatabaseAccessModule =>
 
-  val sql = etl.filter(p => p.taskId > 0).result
+  def demoService(): Message = {
+    val etl: TableQuery[EtlTaskCfg] = TableQuery[EtlTaskCfg]
 
-//  val result = databasePool.run(DBIO.seq(
-//    res
-//  ))
-//
-//  println(result.value)
+    val sql = etl.filter(p => p.taskId > 0).result
 
-  val result = databasePool.run(sql)
+    //  val result = databasePool.run(DBIO.seq(
+    //    res
+    //  ))
+    //
+    //  println(result.value)
 
-//  result onComplete {
-//    case r => println(r)
-//  }
-  val r = Await.result(result, Duration.Inf)
+    val result = self.databasePool.run(sql)
+
+    //  result onComplete {
+    //    case r => println(r)
+    //  }
+    val r = Await.result(result, Duration.Inf)
+
+    Message(r.toString())
+  }
 }

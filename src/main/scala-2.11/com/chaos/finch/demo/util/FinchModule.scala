@@ -8,11 +8,11 @@ import com.twitter.util.Await
   * Created by zcfrank1st on 7/4/16.
   */
 trait FinchModule {
-  self: com.twitter.app.App with ConfigModule =>
+  self: com.twitter.app.App =>
   premain {
     println("[Finch] server is starting ...")
 
-    val server = Http.serve(self.config.getString(self.env + ".http.port"), Api.apiService)
+    val server = Http.serve(ConfigLoader.config.getString(ConfigLoader.env + ".http.port"), Api.apiService)
     onExit {
       server.close()
     }

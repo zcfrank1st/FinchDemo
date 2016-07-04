@@ -1,6 +1,6 @@
 package com.chaos.finch.demo.v1
 
-import com.chaos.finch.demo.v1.api.{Demo, HelloWorld}
+import com.chaos.finch.demo.v1.api.{Demo, DemoApi, HelloWorld}
 import com.chaos.finch.demo.v1.handler.ErrorHandler
 import com.twitter.finagle.Service
 import com.twitter.finagle.http.filter.ExceptionFilter
@@ -13,7 +13,7 @@ import io.circe.generic.auto._
   * Created by zcfrank1st on 7/2/16.
   */
 trait Api {
-  private def api = HelloWorld.helloWorldApi :+: Demo.demoApi
+  private def api = HelloWorld.helloWorldApi :+: DemoApi.demoApi
 
   def apiService: Service[Request, Response] = ExceptionFilter andThen api.handle(ErrorHandler.apiErrorHandler).toService
 }
