@@ -13,7 +13,7 @@ import scala.concurrent.duration.Duration
   * Created by zcfrank1st on 7/2/16.
   */
 
-object DemoDao extends App with DatabaseAccessModule with ConfigModule {
+class DemoService extends DatabaseAccessModule with ConfigModule {
   val etl: TableQuery[EtlTaskCfg] = TableQuery[EtlTaskCfg]
 
   val sql = etl.filter(p => p.taskId > 0).result
@@ -30,6 +30,4 @@ object DemoDao extends App with DatabaseAccessModule with ConfigModule {
 //    case r => println(r)
 //  }
   val r = Await.result(result, Duration.Inf)
-
-
 }
