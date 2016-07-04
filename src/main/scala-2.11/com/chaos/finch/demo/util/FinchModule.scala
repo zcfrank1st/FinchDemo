@@ -12,7 +12,7 @@ trait FinchModule {
   premain {
     println("[Finch] server is starting ...")
 
-    val server = Http.serve(":8080", Api.apiService)
+    val server = Http.serve(ConfigLoader.config.getString(ConfigLoader.env + ".http.port"), Api.apiService)
     onExit {
       server.close()
     }
