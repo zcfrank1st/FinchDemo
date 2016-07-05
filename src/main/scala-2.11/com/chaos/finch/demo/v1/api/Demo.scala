@@ -1,7 +1,7 @@
 package com.chaos.finch.demo.v1.api
 
-import com.chaos.finch.demo.util.{ConfigModule, DatabaseAccessModule}
-import com.chaos.finch.demo.v1.model.Message
+import com.chaos.finch.demo.util.DatabaseAccessModule
+import com.chaos.finch.demo.v1.model.{Message, Message1}
 import com.chaos.finch.demo.v1.service.DemoService
 import io.finch._
 import io.finch.circe._
@@ -13,7 +13,7 @@ trait Demo {
   self: DemoService =>
   def demoApi = demoController
 
-  def demoController: Endpoint[Message] =
+  def demoController: Endpoint[Message1] =
     get("demo" :: string("demo")) {(demo: String) =>
       Ok(self.demoService())
     }

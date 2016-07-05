@@ -16,9 +16,35 @@ trait Tables {
   import slick.jdbc.{GetResult => GR}
 
   /** DDL for all tables. Call .create to execute. */
-  lazy val schema: profile.SchemaDescription = EtlTaskCfg.schema
+  lazy val schema: profile.SchemaDescription = Demo.schema ++ EtlTaskCfg.schema
   @deprecated("Use .schema instead of .ddl", "3.0")
   def ddl = schema
+
+  /** Entity class storing rows of table Demo
+   *  @param id Database column id SqlType(INT UNSIGNED), AutoInc, PrimaryKey
+   *  @param name Database column name SqlType(VARCHAR), Length(25,true), Default(Some())
+   *  @param age Database column age SqlType(INT) */
+  case class DemoRow(id: Int, name: Option[String] = Some(""), age: Int)
+  /** GetResult implicit for fetching DemoRow objects using plain SQL queries */
+  implicit def GetResultDemoRow(implicit e0: GR[Int], e1: GR[Option[String]]): GR[DemoRow] = GR{
+    prs => import prs._
+    DemoRow.tupled((<<[Int], <<?[String], <<[Int]))
+  }
+  /** Table description of table demo. Objects of this class serve as prototypes for rows in queries. */
+  class Demo(_tableTag: Tag) extends Table[DemoRow](_tableTag, "demo") {
+    def * = (id, name, age) <> (DemoRow.tupled, DemoRow.unapply)
+    /** Maps whole row to an option. Useful for outer joins. */
+    def ? = (Rep.Some(id), name, Rep.Some(age)).shaped.<>({r=>import r._; _1.map(_=> DemoRow.tupled((_1.get, _2, _3.get)))}, (_:Any) =>  throw new Exception("Inserting into ? projection not supported."))
+
+    /** Database column id SqlType(INT UNSIGNED), AutoInc, PrimaryKey */
+    val id: Rep[Int] = column[Int]("id", O.AutoInc, O.PrimaryKey)
+    /** Database column name SqlType(VARCHAR), Length(25,true), Default(Some()) */
+    val name: Rep[Option[String]] = column[Option[String]]("name", O.Length(25,varying=true), O.Default(Some("")))
+    /** Database column age SqlType(INT) */
+    val age: Rep[Int] = column[Int]("age")
+  }
+  /** Collection-like TableQuery object for table Demo */
+  lazy val Demo = new TableQuery(tag => new Demo(tag))
 
   /** Row type of table EtlTaskCfg */
   type EtlTaskCfgRow = HCons[Option[Int],HCons[Option[String],HCons[Option[String],HCons[Option[String],HCons[Option[String],HCons[Option[Int],HCons[Option[Char],HCons[Option[Boolean],HCons[Option[Boolean],HCons[Option[Boolean],HCons[Option[Boolean],HCons[Option[Boolean],HCons[Option[String],HCons[java.sql.Timestamp,HCons[Option[String],HCons[Option[java.sql.Timestamp],HCons[Option[Boolean],HCons[Option[String],HCons[Option[String],HCons[Option[String],HCons[Option[String],HCons[Option[String],HCons[Option[Int],HCons[Option[Int],HCons[Option[Boolean],HCons[Option[String],HCons[Option[Byte],HNil]]]]]]]]]]]]]]]]]]]]]]]]]]]

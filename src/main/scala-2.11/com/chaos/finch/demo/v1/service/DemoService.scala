@@ -1,8 +1,8 @@
 package com.chaos.finch.demo.v1.service
 
-import com.chaos.finch.demo.util.{ConfigModule, DatabaseAccessModule}
-import com.chaos.finch.demo.v1.model.Message
-import com.chaos.finch.demo.v1.model.gen.Tables.EtlTaskCfg
+import com.chaos.finch.demo.util.DatabaseAccessModule
+import com.chaos.finch.demo.v1.model.{Message, Message1}
+import com.chaos.finch.demo.v1.model.gen.Tables.Demo
 import slick.lifted.TableQuery
 import slick.dbio.DBIO
 import slick.driver.MySQLDriver.api._
@@ -17,10 +17,10 @@ import scala.concurrent.duration.Duration
 trait DemoService {
 self: DatabaseAccessModule =>
 
-  def demoService(): Message = {
-    val etl: TableQuery[EtlTaskCfg] = TableQuery[EtlTaskCfg]
+  def demoService(): Message1 = {
+    val etl: TableQuery[Demo] = TableQuery[Demo]
 
-    val sql = etl.filter(p => p.taskId > 0).result
+    val sql = etl.filter(p => p.id > 0).result
 
     //  val result = databasePool.run(DBIO.seq(
     //    res
@@ -35,6 +35,6 @@ self: DatabaseAccessModule =>
     //  }
     val r = Await.result(result, Duration.Inf)
 
-    Message(r.toString())
+    Message1(r.toList)
   }
 }
