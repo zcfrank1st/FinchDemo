@@ -35,6 +35,6 @@ self: DatabaseAccessModule =>
     //  }
     val r = Await.result(result, Duration.Inf)
 
-    Message1(r.toList)
+    Message1("ok", r.toList)
   }
 }

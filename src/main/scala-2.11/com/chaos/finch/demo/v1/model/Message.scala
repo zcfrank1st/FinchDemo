@@ -7,4 +7,4 @@ import com.chaos.finch.demo.v1.model.gen.Tables.DemoRow
   */
 final case class Message(message: String)
 
-final case class Message1(list: List[DemoRow])
+final case class Message1(message: String, body: List[DemoRow])
